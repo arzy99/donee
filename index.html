@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Cepet Sembuh</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#a1c4fd,#c2e9fb);
+  height:100vh;
+  overflow:hidden;
+  text-align:center;
+}
+
+.container{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+h1{
+  color:#2c3e50;
+  margin-bottom:10px;
+  font-size:36px; /* font utama stabil */
+}
+
+p{
+  color:#2c3e50;
+  margin-bottom:30px;
+  font-size:18px; /* font utama stabil */
+}
+
+.buttons{
+  display:flex;
+  gap:20px;
+}
+
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+  transition: all 0.2s ease;
+}
+
+#yes{
+  background:#5aa9ff;
+  color:white;
+  position:relative;
+}
+
+#no{
+  background:#89c2ff;
+  color:white;
+  position:relative;
+}
+
+.ice{
+  position:absolute;
+  font-size:32px;
+  animation:fall 3s linear infinite;
+}
+
+.photo{
+  position:absolute;
+  width:120px;
+  border-radius:10px;
+  animation:fall 5s linear infinite;
+}
+
+@keyframes fall{
+  from{transform:translateY(-100px);}
+  to{transform:translateY(110vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="mainContent">
+  <h1>Semoga Cepet Sembuh</h1>
+  <p>Sabar ya kasian badannya butuh adaptasi</p>
+  <div class="buttons">
+    <button id="yes">coba di klik</button>
+    <button id="no">ngga mau</button>
+  </div>
+</div>
+
+<script>
+let yes = document.getElementById("yes");
+let no = document.getElementById("no");
+let main = document.getElementById("mainContent");
+
+let yesMove = 0;
+let noMove = 0;
+
+no.addEventListener("mouseover", function(){
+  noMove++;
+  if(noMove === 2){
+    no.innerText = "bener niih?"; // font berubah
+  }
+  // Kabur terus, tombol makin kecil
+  let currentWidth = no.offsetWidth;
+  let currentHeight = no.offsetHeight;
+  let newWidth = Math.max(currentWidth*0.9,30);
+  let newHeight = Math.max(currentHeight*0.9,20);
+  no.style.width = newWidth + "px";
+  no.style.height = newHeight + "px";
+  no.style.position = "absolute";
+  no.style.left = Math.random()*(window.innerWidth - newWidth) + "px";
+  no.style.top = Math.random()*(window.innerHeight - newHeight) + "px";
+});
+
+yes.addEventListener("mouseover", function(){
+  if(yesMove < 2){
+    yes.style.position = "absolute";
+    yes.style.left = Math.random()*(window.innerWidth-120)+"px";
+    yes.style.top = Math.random()*(window.innerHeight-60)+"px";
+    yesMove++;
+  }
+});
+
+yes.addEventListener("click", function(){
+  main.style.display = "none";
+
+  // Tampilkan es krim
+  for(let i=0;i<30;i++){
+    let ice = document.createElement("div");
+    ice.className = "ice";
+    ice.innerHTML = "🍦";
+    ice.style.left = Math.random()*window.innerWidth + "px";
+    document.body.appendChild(ice);
+  }
+
+  // Tampilkan foto (ganti dengan file kamu)
+  let photos = ["foto1.jpg","foto2.jpg","foto3.jpg"];
+  photos.forEach(src => {
+    let img = document.createElement("img");
+    img.src = src;
+    img.className = "photo";
+    img.style.left = Math.random()*window.innerWidth + "px";
+    document.body.appendChild(img);
+  });
+});
+</script>
+
+</body>
+</html>
